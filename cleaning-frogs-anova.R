@@ -20,3 +20,11 @@ frogs <- frogs %>%
   pivot_longer(`13`:`25`, names_to="temperature", values_to="days") %>% 
   drop_na(days)
 #___________________________----
+model <- lm(days ~ temperature ~ 1, data=frogs)
+summary(model)
+
+# PLOTTING DATA
+```{r fig.asp = 0.8, fig.width = 7, out.width = "50%"}
+plot 
+# The final rendered size of the image changes according to out.width
+```

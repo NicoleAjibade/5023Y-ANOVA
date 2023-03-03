@@ -11,6 +11,9 @@ knitr::opts_chunk$set(echo = TRUE)
 # PACKAGES ----
 library(tidyverse)
 library(here)
+library(GGally)
+library(emmeans)
+library(performance)
 ```
 
 ## How does frogspawn hatching time vary with temperature?
@@ -52,8 +55,41 @@ summary(frogs)
 
 ```
 
+```{r linear model, echo=FALSE, include=TRUE}
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+lsmodel_frogs1 <- lm(days ~ temperature, data = frogs)
+
+# summary(lsmodel_frogs1)
+
+# anova(lsmodel_frogs1)
+
+broom::tidy(lsmodel_frogs1, conf.int = T)
+
 ```
 
+```{r checking your assumptions, echo=FALSE, include=FALSE}
+performance::check_model(lsmodel_frogs1,
+                         check = c("qq", "outliers", "homogeneity"))
+```
+
+```{r plots}
+
+ggplot(data = frogs, aes(x = temperature, y = days)) +
+  geom_boxplot(aes(fill = temperature),
+              alpha = 0.7, 
+              width = 0.5, # change width of boxplot
+              show.legend = FALSE)+
+   labs(x = "Temperature",
+       y = "Number of Days for the Hatching")
+
+```
+
+
+### Summary
+Increasing temperatures had a clear effect on reducing the time taken for frogspawn to hatch (one-way ANOVA: F2,57 = 385.9, P < 0.001). At 13
+∘
+ C the mean time to hatching was 26.3 days [25.8-26.8 95% CI], this reduced by an average of 5.3 days [4.57 - 6.02] at 18
+∘
+ C and by 10.1 days [9.37 - 10.82] at 25
+∘
+ C.

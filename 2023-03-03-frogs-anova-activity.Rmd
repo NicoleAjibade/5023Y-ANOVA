@@ -1,5 +1,5 @@
 ---
-title: "Does Temperature Affect Frogspawn Development"
+title: "Does Temperature Affect Frogspawn Development?"
 output: html_document
 date: "2023-03-03"
 author: 'Nicole Ajibade'
@@ -7,16 +7,22 @@ author: 'Nicole Ajibade'
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+# PACKAGES ----
+library(tidyverse)
 ```
 
-## R Markdown
+## How does frogspawn hatching time vary with temperature?
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```{r read data}
+frogs <- read_csv("data/frogs_messy_data.csv")
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+head(frogs)
+```
 
-```{r cars}
-summary(cars)
+```{r frogs data}
+summary(frogs)
+
 ```
 
 ## Including Plots

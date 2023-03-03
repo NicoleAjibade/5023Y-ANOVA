@@ -10,27 +10,50 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # PACKAGES ----
 library(tidyverse)
+library(here)
 ```
 
 ## How does frogspawn hatching time vary with temperature?
 
-```{r read data}
+```{r read data, echo=FALSE, include=FALSE}
 frogs <- read_csv("data/frogs_messy_data.csv")
 
 head(frogs)
 ```
 
-```{r frogs data}
+We collected newly-layed frogspawn from a pond in the Italian Alps and we brought them back to the lab, where we divided them into 60 water containers. 20 of the containers’ water temperature was kept to 13°C, 20 containers were kept to 18°C and the remaining 20 containers were kept to 25°C. Having a high number of replicates increases our confidence that the expected difference between groups is due to the factor we are interested in. Here, temperature.
+
+We monitored each water container and we recorded hatching times (days until hatching of eggs) in a spreadsheet (here called frogs_messy_data.csv).
+
+Our response variable is Hatching_time.
+
+Our explanatory variable is Temperature, with 3 levels: 13°C, 18°C and 25°C.
+
+```{r frogs data, echo=FALSE}
 summary(frogs)
 
 ```
 
-## Including Plots
+Hypothesis - the mean frogspawn hatching time will vary with temperature level. We can predict that given our temperature range, at the highest temperature (25°C) hatching time will be reduced.
 
-You can also embed plots, for example:
+
+```{r tidy data, echo=FALSE, include=FALSE}
+frogs <- frogs %>% 
+  rename("13" = Temperature13,
+         "18" = Temperature18,
+         "25" = Temperature25,
+         frogspawn_id = `Frogspawn sample id`) %>% 
+  pivot_longer(`13`:`25`, names_to="temperature", values_to="days") %>% 
+  drop_na(days)
+```
+
+```{r frog data, echo=FALSE}
+summary(frogs)
+
+```
+
 
 ```{r pressure, echo=FALSE}
 plot(pressure)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
